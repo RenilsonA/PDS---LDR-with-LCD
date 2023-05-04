@@ -9,7 +9,7 @@
 #define D6_DISP 3
 #define D7_DISP 2
 
-float AD_RESO = (5.0/1024.0);
+float AD_RESO = (4.8/1024.0);
 
 LiquidCrystal lcd(RS_DISP, EN_DISP, D4_DISP, D5_DISP, D6_DISP, D7_DISP);
 
@@ -21,7 +21,7 @@ void setup() {
 
 void loop() {
   uint16_t luminacia = analogRead(LDR_PIN);
-  uint8_t x = luminacia / (1024 / 8);
+  int x = luminacia / (1024 / 8);
   PORTB = x;
   float tensao = analogRead(AMP_PIN);
   Serial.print("Tensao: ");
@@ -51,5 +51,10 @@ void loop() {
   lcd.print("V:");
   lcd.setCursor(11, 1);
   lcd.print(tensao * AD_RESO);
-  delay(20);
+
+  lcd.setCursor(9, 0);
+  lcd.print("V:");
+  lcd.setCursor(11, 0);
+  lcd.print(luminacia * AD_RESO);
+  delay(100);
 }
